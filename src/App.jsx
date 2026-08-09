@@ -21,11 +21,12 @@ import ScrollTopFab from './components/ScrollTopFab';
 import ToastHost from './components/ToastHost';
 
 import { parseParticipants, computeDashboard } from './lib/compute';
-import { DEFAULT_SETTINGS } from './lib/data';
+import { DEFAULT_SETTINGS, COMMON_ANNOUNCEMENTS } from './lib/data';
 import { downloadText, fmtNum, cohortBaseId } from './lib/helpers';
 import { exportDashboardPdf, exportWeeklyRollupPdf } from './lib/exports';
 import { migrateCohorts, saveCohort } from './lib/storage';
 import { showToast } from './lib/toast';
+import { checkWeeklyReminder } from './lib/notify';
 
 function cohortIdFromFile(file) {
   return cohortBaseId(file.name) || `cohort-${Date.now()}`;
@@ -56,13 +57,30 @@ export default function App() {
   const [contactLog, setContactLog] = useState({});
   const [confettiActive, setConfettiActive] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const dashboardRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    const template = COMMON_ANNOUNCEMENTS.find((t) => t.id === settings.weeklyReminderTemplateId);
+    checkWeeklyReminder(settings, template?.label || 'Weekly announcement');
+    // Re-check every hour in case the tab stays open across midnight/the target day.
+    const t = setInterval(() => {
+      checkWeeklyReminder(settings, template?.label || 'Weekly announcement');
+    }, 60 * 60 * 1000);
+    return () => clearInterval(t);
+  }, [settings]);
+
   const handleUpload = (files) => {
+    setUploading(true);
+    let pending = files.length;
+    const done = () => {
+      pending -= 1;
+      if (pending <= 0) setUploading(false);
+    };
     files.forEach((file) => {
       Papa.parse(file, {
         header: true,
@@ -95,9 +113,11 @@ export default function App() {
             return { ...prev, [id]: newCohort };
           });
           setActiveCohortId(id);
+          done();
         },
         error: () => {
           showToast(`Could not parse ${file.name}. Please check it is a valid CSV export.`, 'error');
+          done();
         },
       });
     });
@@ -243,6 +263,7 @@ export default function App() {
           activeCohortId={activeCohortId}
           onSelectCohort={setActiveCohortId}
           onUpload={handleUpload}
+          uploading={uploading}
           dashboard={dashboard}
           onCopyReport={copyReportText}
           onPrint={handlePrint}

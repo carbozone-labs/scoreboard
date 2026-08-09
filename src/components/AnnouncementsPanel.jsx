@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { COMMON_ANNOUNCEMENTS } from '../lib/data';
 import { fillShared, mailtoBulkLink, fmtNum } from '../lib/helpers';
 import { showToast } from '../lib/toast';
@@ -18,28 +18,16 @@ function filterAudience(participants, audienceId) {
 export default function AnnouncementsPanel({ participants, settings }) {
   const [templateId, setTemplateId] = useState(COMMON_ANNOUNCEMENTS[0].id);
   const [audienceId, setAudienceId] = useState('all');
-  const [subject, setSubject] = useState('');
-  const [body, setBody] = useState('');
-  const [edited, setEdited] = useState(false);
 
   const template = COMMON_ANNOUNCEMENTS.find((t) => t.id === templateId);
-
-  useEffect(() => {
-    setSubject(fillShared(template.subject, settings));
-    setBody(fillShared(template.body, settings));
-    setEdited(false);
-  }, [templateId]);
 
   const recipients = useMemo(
     () => filterAudience(participants, audienceId).filter((p) => p.email),
     [participants, audienceId]
   );
 
-  const handleReset = () => {
-    setSubject(fillShared(template.subject, settings));
-    setBody(fillShared(template.body, settings));
-    setEdited(false);
-  };
+  const subject = fillShared(template.subject, settings);
+  const body = fillShared(template.body, settings);
 
   const handleSend = () => {
     if (recipients.length === 0) {
@@ -48,7 +36,7 @@ export default function AnnouncementsPanel({ participants, settings }) {
     }
     const emails = recipients.map((p) => p.email);
     window.location.href = mailtoBulkLink(emails, subject, body);
-    showToast(`Mail client opened - ${emails.length} recipient(s) in BCC.`, 'success');
+    showToast(`Mail client opened — ${emails.length} recipient(s) in BCC.`, 'success');
   };
 
   const handleCopyEmails = async () => {
@@ -59,7 +47,7 @@ export default function AnnouncementsPanel({ participants, settings }) {
     }
     try {
       await navigator.clipboard.writeText(emails);
-      showToast('Email list copied - paste into BCC of your mail client.', 'success');
+      showToast('Email list copied — paste into BCC of your mail client.', 'success');
     } catch {
       showToast('Could not copy. Please select and copy the list manually.', 'error');
     }
@@ -91,30 +79,16 @@ export default function AnnouncementsPanel({ participants, settings }) {
         </div>
       </div>
 
-      <div className="announcement-field" style={{ marginBottom: 10 }}>
-        <label>Subject</label>
-        <input
-          value={subject}
-          onChange={(e) => { setSubject(e.target.value); setEdited(true); }}
-        />
-      </div>
-
-      <div className="announcement-field">
-        <label>Body {edited && <span style={{ color: 'var(--gold)' }}>(edited)</span>}</label>
-        <textarea
-          className="announcement-edit-body"
-          value={body}
-          onChange={(e) => { setBody(e.target.value); setEdited(true); }}
-          rows={10}
-        />
+      <div className="announcement-preview">
+        <div className="announcement-preview-subject">{subject}</div>
+        <pre className="announcement-preview-body">{body}</pre>
       </div>
 
       <div className="announcement-footer">
-        <span className="eyebrow">{fmtNum(recipients.length)} recipient(s) in BCC - CC always includes facilitators</span>
+        <span className="eyebrow">{fmtNum(recipients.length)} recipient(s) in BCC · CC always includes facilitators</span>
         <div className="announcement-actions">
-          {edited && <button className="btn" onClick={handleReset}>Reset to template</button>}
-          <button className="btn" onClick={handleCopyEmails}>Copy email list</button>
-          <button className="btn btn-primary" onClick={handleSend}>Send announcement</button>
+          <button className="btn" onClick={handleCopyEmails}>📋 Copy email list</button>
+          <button className="btn btn-primary" onClick={handleSend}>✉ Send announcement</button>
         </div>
       </div>
     </section>

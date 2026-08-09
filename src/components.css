@@ -950,6 +950,59 @@ select option {
   gap: 10px;
 }
 
+/* ---------- Weekly reminder toggle ---------- */
+.reminder-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  font-size: 13px;
+}
+
+.reminder-toggle-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--cyan);
+}
+
+/* ---------- Upload spinner ---------- */
+.btn-spinner-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-spinner {
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Mobile refinements ---------- */
+@media (max-width: 640px) {
+  .hero { padding: 22px 18px 20px; }
+  .hero-number { font-size: 48px; }
+  .hero-title { font-size: 20px; }
+  .hero-badge { width: 42px; height: 42px; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .hero-controls { width: 100%; }
+  .hero-controls select { flex: 1; }
+  .hero-controls .btn { flex: 1; }
+  .countdown-grid div { min-width: 44px; padding: 6px 8px; }
+  .countdown-grid span { font-size: 17px; }
+  .modal-card { padding: 18px; max-height: 92vh; }
+  .section-panel { padding: 16px 14px; }
+}
+
 /* ---------- Toasts ---------- */
 .toast-stack {
   position: fixed;
@@ -1003,17 +1056,4 @@ select option {
   border: 1px solid var(--panel-border);
   border-radius: 12px;
   padding: 8px 4px 0;
-}
-
-.announcement-field input,
-.announcement-edit-body {
-  width: 100%;
-  font-family: var(--font-body);
-  font-size: 13px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--panel-border);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text-primary);
-  resize: vertical;
 }

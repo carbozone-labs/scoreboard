@@ -1,4 +1,4 @@
-export const CSV_HEADERS = [
+﻿export const CSV_HEADERS = [
   'User Name',
   'User Email',
   'Access Code Redemption Status',
@@ -37,6 +37,16 @@ export const FACILITATORS = [
   { name: 'Atharv Ekavire' },
 ];
 
+export const WEEKDAYS = [
+  { value: '1', label: 'Monday' },
+  { value: '2', label: 'Tuesday' },
+  { value: '3', label: 'Wednesday' },
+  { value: '4', label: 'Thursday' },
+  { value: '5', label: 'Friday' },
+  { value: '6', label: 'Saturday' },
+  { value: '0', label: 'Sunday' },
+];
+
 export const DEFAULT_SETTINGS = {
   facilitatorNames: 'Aniket Shaha & Atharv Ekavire',
   programLink: 'https://goo.gle/arcade-facilitator',
@@ -45,7 +55,7 @@ export const DEFAULT_SETTINGS = {
   onboardingTime: '',
   onboardingLink: '',
   chatPlatform: 'WhatsApp',
-  chatLink: 'https://chat.whatsapp.com/K3PZGLZY0PdCBEAhPSgAGi?s=cl&p=i&ilr=4',
+  chatLink: 'https://chat.whatsapp.com/EuX9GZGWzKqJvxSnBONeum?s=cl&p=i&ilr=4',
   deckLink: '',
   recordingLink: '',
   gameLink: '',
@@ -56,6 +66,9 @@ export const DEFAULT_SETTINGS = {
   deadlineDate: '14th September',
   profileFormLink: 'https://forms.gle/VnBCWXJv1jctshTv9',
   creditsVideoLink: 'https://youtu.be/O4iuDOCr234?si=KZyP-w6Bq4Qc6anr',
+  weeklyReminderEnabled: false,
+  weeklyReminderDay: '1',
+  weeklyReminderTemplateId: 'skill_badges_reminder',
 };
 
 export const SETTINGS_FIELDS = [

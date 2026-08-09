@@ -10,6 +10,7 @@ export default function Hero({
   activeCohortId,
   onSelectCohort,
   onUpload,
+  uploading,
   dashboard,
   onCopyReport,
   onPrint,
@@ -51,10 +52,14 @@ export default function Hero({
               ))}
             </select>
           )}
-          <button className="btn btn-primary" onClick={() => fileRef.current?.click()}>
-            ⬆ Upload CSV
+          <button className="btn btn-primary" onClick={() => fileRef.current?.click()} disabled={uploading}>
+            {uploading ? (
+              <span className="btn-spinner-row"><span className="btn-spinner" /> Parsing CSV…</span>
+            ) : (
+              '⬆ Upload CSV'
+            )}
           </button>
-          <input ref={fileRef} type="file" accept=".csv" multiple hidden onChange={handleFiles} />
+          <input ref={fileRef} type="file" accept=".csv" multiple hidden onChange={handleFiles} disabled={uploading} />
         </div>
       </div>
 
