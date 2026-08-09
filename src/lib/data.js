@@ -311,9 +311,10 @@ Thank you for enrolling in the Google Cloud Arcade Facilitator program using our
 
 We noticed that your onboarding wasn't completed correctly, for the following reason:
 
-[[Issue Reason]]
+Google Skills profile URL issue
 
 What to do next:
+
 Please fill out this form with your correct profile URL so we can update our records - {{profileFormLink}}
 
 Please reply to this email if you run into any problems while filling the form - we're happy to help.
@@ -370,4 +371,7 @@ All the best & happy learning,
 Your Google Cloud Arcade Facilitators`,
   },
 ];
+
+
+
 
