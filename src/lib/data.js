@@ -170,6 +170,79 @@ Cheers,
   },
 ];
 
+// Generic (non-personalized) versions of the reminder templates, used when bulk-composing
+// to a whole filtered group in the Reminder Queue — no [[per-person]] fields since a BCC
+// blast can't be merged per recipient.
+export const REMINDER_BULK_TEMPLATES = {
+  all: {
+    subject: 'Keep completing your badges & milestones | Google Cloud Arcade Facilitator Program',
+    body: `Hi everyone,
+
+Just a check-in on your progress in the Google Cloud Arcade Facilitator program. Please make sure your badges and games are up to date.
+
+You have until {{deadlineDate}} to complete your milestones and earn Arcade + Bonus Points.
+
+As always, reach out on our chat group - {{chatLink}} - with any questions.
+
+All the best,
+{{facilitatorNames}}`,
+  },
+  unredeemed: {
+    subject: 'Action needed: Redeem your Arcade access code | Google Cloud Arcade Facilitator Program',
+    body: `Hi everyone,
+
+We noticed your Arcade access code hasn't been redeemed yet. Redeeming your access code is the first step to unlocking the program's games and skill badges, so please complete it as soon as possible using the link below:
+
+{{programLink}}
+
+IMPORTANT: Claim your 750 Cloud Skills Boost credits first, before starting any labs - watch this short video and follow the steps - {{creditsVideoLink}}
+
+You have until {{deadlineDate}} to redeem your code and complete the milestones to earn Arcade + Bonus Points, so please don't wait until the last moment.
+
+As always, reach out on our chat group - {{chatLink}} - with any questions.
+
+All the best,
+{{facilitatorNames}}`,
+  },
+  zero: {
+    subject: 'Start completing your badges & milestones | Google Cloud Arcade Facilitator Program',
+    body: `Hi everyone,
+
+We noticed you haven't completed any badges yet. Please note that you have until {{deadlineDate}} to complete the milestones outlined in the points system, earn Arcade + Bonus Points, and redeem them for exciting Google Cloud prizes. We'd encourage you to get started as soon as possible.
+
+As always, reach out on our chat group - {{chatLink}} - with any questions.
+
+All the best,
+{{facilitatorNames}}`,
+  },
+  profile: {
+    subject: 'Action needed: Fix your profile URL | Google Cloud Arcade Facilitator program',
+    body: `Hi everyone,
+
+We noticed that your onboarding wasn't completed correctly - your Google Skills or Google Developer profile URL needs a fix.
+
+Please fill out this form with your correct profile URL so we can update our records - {{profileFormLink}}
+
+Please reply to this email if you run into any problems while filling the form - we're happy to help.
+
+Looking forward to hearing from you,
+{{facilitatorNames}}`,
+  },
+  near: {
+    subject: 'You are almost there to win your prizes | Google Cloud Arcade Facilitator Program',
+    body: `Hi everyone,
+
+Great progress so far! You're just a few games and skill badges away from earning your milestone prizes.
+
+Please complete the remaining badges as soon as possible to claim your prizes. Note: you have until {{deadlineDate}} to complete the milestones outlined in the points system and redeem your Arcade + Bonus Points for exciting Google Cloud prizes.
+
+As always, reach out on our chat group - {{chatLink}} - with any questions.
+
+All the best,
+{{facilitatorNames}}`,
+  },
+};
+
 // Official Google Cloud Arcade Facilitator program email templates, grammar-polished.
 // {{placeholders}} are filled from settings; [[placeholders]] are filled per-person.
 export const EMAIL_TEMPLATES = [
@@ -324,7 +397,7 @@ Thank you for enrolling in the Google Cloud Arcade Facilitator program using our
 
 We noticed that your onboarding wasn't completed correctly, for the following reason:
 
-Google Developer profile URL issue
+Google Skills profile URL issue
 
 What to do next:
 Please fill out this form with your correct profile URL so we can update our records - {{profileFormLink}}
